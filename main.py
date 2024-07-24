@@ -23,11 +23,13 @@ async def send_message(message: Message, user_message: str) -> None:
     if is_private:
         user_message = user_message[1:]
 
-    try: 
-        response: str = get_response(user_message)
-        await message.author.send(response) if is_private else await message.channel.send(response)
-    except Exception as e:
-        print(e)
+    if user_message[0:2] == "!c":
+        try: 
+            user_message = user_message[2:]
+            response: str = get_response(user_message)
+            await message.author.send(response) if is_private else await message.channel.send(response)
+        except Exception as e:
+            print(e)
 
 # STARTUP FOR BOT
 @client.event
